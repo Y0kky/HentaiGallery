@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    justify-content: space-between;  /* Размещает элементы по краям */
+    align-items: center;  /* Выравнивает по вертикали */
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    position: relative;
+}
+
+.centre-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);  /* Центрирует заголовок */
+    white-space: nowrap;  /* Заголовок не переносится */
+}
+
+.left-text {
+    text-align: left;
+    margin-left: 1000px;
+}
+.low-left-text{
+    text-align: left;
+    margin-left: 600px;
+}
+
+.lleft-text {
+    text-align: left;
+    margin-left: 1200px;
+    margin-top: -550px;
+}

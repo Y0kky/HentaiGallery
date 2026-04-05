@@ -1,0 +1,31 @@
+h2 {
+    font-family: 'Arial', sans-serif; /* Измените 'Arial' на нужный вам шрифт */
+    font-size: 16px; /* Размер шрифта */
+    color: #333; /* Цвет текста */
+}
+
+h1 {
+    font-family: 'Georgia', serif; /* Шрифт для заголовка */
+    color: #007BFF; /* Цвет заголовка */
+}
+.stylle{
+    font-family: Arial, Helvetica, sans-serif; /* Семейство шрифтов */
+    font-size: 16px;                          /* Размер шрифта */
+    font-weight: bold;                        /* Насыщенность (normal, bold, 100-900) */
+    font-style: oblique;                       /* Стиль (normal, italic, oblique) */
+    color: #333333;                           /* Цвет текста */
+    line-height: 1.5;                         /* Межстрочный интервал (высота строки) */
+    text-decoration: underline;               /* Подчёркивание (underline, overline, line-through, none) */
+    text-transform: uppercase;                /* Регистр (uppercase, lowercase, capitalize) */
+    letter-spacing: 1px;                      /* Межбуквенный интервал (трекинг) */
+    word-spacing: 5px;                        /* Интервал между словами */
+    text-align: center;   
+}
+.menu {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    gap: 15px;
+}

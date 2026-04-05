@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Anime music&video</title>
+    <link rel="stylesheet" href="padding-text.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Delicious+Handrawn&family=Meow+Script&display=swap" rel="stylesheet">
+    <style>
+        /* Все ваши стили остаются без изменений */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: url('fonn.jpg') no-repeat center center fixed;
+            background-size: cover;
+            filter: blur(5px);
+            z-index: -2;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+
+        .menu {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 15px;
+        }
+
+        .menu-item {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: 500;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 0, 0, 0.4), 0 0 45px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background: linear-gradient(135deg, #ff6b6b, #c92a2a);
+            transform: translateY(-2px);
+            border-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+        }
+
+        .tabs-container {
+            position: sticky;
+            top: 70px;
+            z-index: 99;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px);
+            border-radius: 50px;
+            padding: 8px;
+            margin-bottom: 30px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 12px 30px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            min-width: 180px;
+            height: 48px;
+            line-height: 24px;
+        }
+
+        .tab-btn:hover {
+            background: rgba(102, 126, 234, 0.7);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #ff6b6b, #c92a2a);
+            box-shadow: 0 0 15px rgba(233, 116, 116, 0.4);
+            transform: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .tab-content {
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 70px;
+            min-height: 500px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .random-card {
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 500px;
+            margin: 20px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .random-card video {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 15px;
+            margin: 10px 0;
+        }
+
+        .random-card h3 {
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .random-card p {
+            color: #ccc;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .random-btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #ff6b6b, #c92a2a 100%);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(233, 116, 116, 0.4);
+            margin: 20px;
+        }
+
+        .random-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(233, 116, 116, 0.4);
+        }
+
+        .gallery-section {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .gallery-title {
+            text-align: center;
+            color: white;
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 20px;
+        }
+
+        .gallery-item {
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .gallery-item-image {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+        }
+
+        .gallery-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-item-image img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item-info {
+            padding: 18px;
+            text-align: center;
+        }
+
+        .gallery-item-info h3 {
+            color: #667eea;
+            font-size: 20px;
+            margin-bottom: 8px;
+            font-family: "Delicious Handrawn", cursive;
+        }
+
+        .gallery-item-info p {
+            color: #aaa;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        .gallery-item-info .anime-name {
+            color: #888;
+            font-size: 13px;
+            display: inline-block;
+            background: rgba(102, 126, 234, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 15px;
+            box-shadow: 0 0 50px rgba(102, 126, 234, 0.3);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 35px;
+            cursor: pointer;
+        }
+
+        .modal-caption {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .centre-text {
+            text-align: center;
+            min-height: 400px;
+        }
+
+        .delicious-handrawn-regular {
+            font-family: "Delicious Handrawn", cursive;
+        }
+
+        .gallery-stats {
+            text-align: center;
+            color: #888;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-animate {
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Загрузчик */
+        .image-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        /* Убираем бесконечный загрузчик */
+        .image-loader {
+            display: none !important;
+        }
+
+        .gallery-item-image img {
+            opacity: 1 !important;
+        }
+        /* ПАДАЮЩИЕ ЧАСТИЦЫ */
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    color: #ff6b6b;
+    font-size: 20px;
+    animation: fall linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+    </style>
+    <link rel="icon" href="mikaxd.ico">    
+</head>
+<body>
+    <div class="delicious-handrawn-regular">
+        <div class="menu">
+            <a href="project1.htm" class="menu-item active">Home</a>
+            <a href="index.html" class="menu-item">Hentai</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="videos">🎬 Случайное видео</button>
+                <button class="tab-btn" data-tab="gallery">🌸 Галерея аниме девушек</button>
+                <button class="tab-btn" data-tab="random-char">✨ Случайная девушка</button>
+            </div>
+        </div>
+
+        <div class="tab-content active" id="videos-tab">
+            <div class="centre-text">
+                <button class="random-btn" id="randomBtn">🎬 Показать рандомное видео 🎬</button>
+                <div id="randomContainer" class="random-card" style="display: none;">
+                    <video id="randomVideo" controls loop>
+                        <source id="videoSource" src="" type="video/mp4">
+                        Твой браузер не поддерживает видео
+                    </video>
+                    <h3 id="randomTitle"></h3>
+                    <p id="randomDescription"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="gallery-tab">
+            <div class="gallery-section">
+                <h2 class="gallery-title">🌸 Галерея аниме девушек 🌸</h2>
+                <div class="gallery-stats" id="galleryStats"></div>
+                <div class="gallery-grid" id="galleryGrid"></div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="random-char-tab">
+            <div class="centre-text">
+                <button class="random-btn" id="randomCharBtn">✨ Показать случайную девушку ✨</button>
+                <div id="randomCharContainer" class="random-card" style="display: none;">
+                    <img id="randomCharImage" src="" alt="Anime girl" style="width: 100%; border-radius: 15px;">
+                    <h3 id="randomCharName"></h3>
+                    <p id="randomCharAnime"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <img id="modalImage" src="" alt="">
+            <div class="modal-caption" id="modalCaption"></div>
+        </div>
+    </div>
+
+    <script>
+    const animeGirls = [
+        {
+            name: "Аска Лэнгли Сорью",
+            anime: "Евангелион",
+            image: "https://i.pinimg.com/736x/ec/67/dc/ec67dcaba97f789395e83e16b36a1d14.jpg",
+            description: "Пилот Евангелиона-02. Энергичная и гордая девушка с огненным характером."
+        },
+        {
+            name: "Рей Аянами",
+            anime: "Евангелион",
+            image: "https://i.pinimg.com/736x/ec/67/dc/ec67dcaba97f789395e83e16b36a1d14.jpg",
+            description: "Пилот Евангелиона-00. Таинственная и спокойная девушка."
+        },
+        {
+            name: "Сакура Харуно",
+            anime: "Наруто",
+            image: "https://i.pinimg.com/736x/ec/67/dc/ec67dcaba97f789395e83e16b36a1d14.jpg",
+            description: "Медик ниндзя из деревни Скрытого Листа. Сильная и целеустремленная."
+        },
+        {
+            name: "Хината Хьюга",
+            anime: "Наруто",
+            image: "https://i.pinimg.com/736x/ec/67/dc/ec67dcaba97f789395e83e16b36a1d14.jpg",
+            description: "Наследница клана Хьюга. Нежная и преданная девушка."
+        },
+        {
+            name: "Микаса Аккерман",
+            anime: "Атака Титанов",
+            image: "https://i.pinimg.com/736x/ec/67/dc/ec67dcaba97f789395e83e16b36a1d14.jpg",
+            description: "Одна из сильнейших воинов. Преданная и бесстрашная."
+        },
+        {
+            name: "Рем",
+            anime: "Re:Zero",
+            image: "https://i.pinimg.com/736x/ec/67/dc/ec67dcaba97f789395e83e16b36a1d14.jpg",
+            description: "Горничная в поместье Розвааля. Преданная и любящая девушка."
+        },
+        {
+            name: "Эмилия",
+            anime: "Re:Zero",
+            image: "https://i.pinimg.com/736x/ec/67/dc/ec67dcaba97f789395e83e16b36a1d14.jpg",
+            description: "Полуэльфийка с серебряными волосами. Кандидат на пост короля."
+        },
+        {
+            name: "Незуко Камадо",
+            anime: "Клинок, рассекающий демонов",
+            image: "https://i.pinimg.com/736x/ec/67/dc/ec67dcaba97f789395e83e16b36a1d14.jpg",
+            description: "Сестра Танджиро. Милая девушка, превратившаяся в демона."
+        },
+        {
+            name: "Асуна Юки",
+            anime: "Sword Art Online",
+            image: "https://i.pinimg.com/736x/ec/67/dc/ec67dcaba97f789395e83e16b36a1d14.jpg",
+            description: "Заместитель командира гильдии. Виртуозно владеет рапирой."
+        },
+        {
+            name: "Мэгумин",
+            anime: "KonoSuba",
+            image: "https://i.pinimg.com/736x/ec/67/dc/ec67dcaba97f789395e83e16b36a1d14.jpg",
+            description: "Архимаг с одержимостью к взрывной магии."
+        },
+        {
+            name: "Виолет Эвергарден",
+            anime: "Вайолет Эвергарден",
+            image: "https://i.pinimg.com/736x/ec/67/dc/ec67dcaba97f789395e83e16b36a1d14.jpg",
+            description: "Автоматическая кукла. Девушка, познающая чувства."
+        },
+        {
+            name: "Шинобу Кочо",
+            anime: "Клинок, рассекающий демонов",
+            image: "https://i.pinimg.com/736x/ec/67/dc/ec67dcaba97f789395e83e16b36a1d14.jpg",
+            description: "Столп насекомых. Мастер яда с загадочной улыбкой."
+        },
+        {
+            name: "Юкино Юкиношита",
+            anime: "Oregairu",
+            image: "https://i.pinimg.com/736x/ec/67/dc/ec67dcaba97f789395e83e16b36a1d14.jpg",
+            description: "Холодная и красивая девушка из элитной школы."
+        }
+    ];
+
+    // === ЛОГИКА ВИДЕО ===
+    const items = [
+        { video: "ostt.mp4", title: "🎬 Классный момент 1 🎬", description: "Очень эпичный момент из аниме." },
+        { video: "ostt1.mp4", title: "🌸 Красивый момент 🌸", description: "Очень красивая сцена с сакурой." },
+        { video: "ostt2.mp4", title: "⚡ Эпичная битва ⚡", description: "Невероятная битва с крутыми спецэффектами." },
+        { video: "ostt3.mp4", title: "😄 Смешной момент 😄", description: "Очень забавная сцена." },
+        { video: "ostt4.mp4", title: "💔 Грустная сцена 💔", description: "Трогательный момент." }
+    ];
+    
+    const randomBtn = document.getElementById('randomBtn');
+    const randomContainer = document.getElementById('randomContainer');
+    const randomVideo = document.getElementById('randomVideo');
+    const videoSource = document.getElementById('videoSource');
+    const randomTitle = document.getElementById('randomTitle');
+    const randomDescription = document.getElementById('randomDescription');
+    
+    function getRandomItem() {
+        return items[Math.floor(Math.random() * items.length)];
+    }
+    
+    function showRandomVideo() {
+        const randomItem = getRandomItem();
+        randomVideo.pause();
+        videoSource.src = randomItem.video;
+        randomVideo.load();
+        randomTitle.textContent = randomItem.title;
+        randomDescription.textContent = randomItem.description;
+        randomContainer.style.display = "block";
+        randomContainer.classList.remove('card-animate');
+        setTimeout(() => randomContainer.classList.add('card-animate'), 10);
+    }
+    
+    if (randomBtn) randomBtn.addEventListener('click', showRandomVideo);
+
+    // === ГАЛЕРЕЯ (БЕЗ ЗАГРУЗЧИКА) ===
+    function renderGallery() {
+        const galleryGrid = document.getElementById('galleryGrid');
+        const galleryStats = document.getElementById('galleryStats');
+        
+        if (!galleryGrid) return;
+        
+        if (galleryStats) {
+            galleryStats.innerHTML = `✨ Всего персонажей: ${animeGirls.length} ✨`;
+        }
+        
+        galleryGrid.innerHTML = '';
+        
+        animeGirls.forEach((girl, index) => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.style.animationDelay = `${(index % 15) * 0.05}s`;
+            
+            // Убираем загрузчик полностью
+            item.innerHTML = `
+                <div class="gallery-item-image">
+                    <img src="${girl.image}" alt="${girl.name}" loading="lazy"
+                         onerror="this.src='https://placehold.co/400x500/1a1a2e/667eea?text=${encodeURIComponent(girl.name)}'">
+                </div>
+                <div class="gallery-item-info">
+                    <h3>${girl.name}</h3>
+                    <span class="anime-name">📺 ${girl.anime}</span>
+                    <p>${girl.description}</p>
+                </div>
+            `;
+            
+            item.addEventListener('click', () => openModal(girl.image, girl.name, girl.anime, girl.description));
+            galleryGrid.appendChild(item);
+        });
+        
+        console.log(`✅ Загружено ${animeGirls.length} аниме девушек`);
+    }
+
+    // === МОДАЛЬНОЕ ОКНО ===
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalCaption = document.getElementById('modalCaption');
+    const modalClose = document.querySelector('.modal-close');
+    
+    function openModal(imageUrl, name, anime, description) {
+        modalImage.src = imageUrl;
+        modalCaption.innerHTML = `<strong>${name}</strong> | ${anime}<br><span style="font-size: 12px;">${description || ''}</span>`;
+        modal.classList.add('active');
+    }
+    
+    if (modalClose) {
+        modalClose.addEventListener('click', () => modal.classList.remove('active'));
+    }
+    
+    modal?.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+    });
+
+    // === СЛУЧАЙНАЯ ДЕВУШКА ===
+    const randomCharBtn = document.getElementById('randomCharBtn');
+    const randomCharContainer = document.getElementById('randomCharContainer');
+    const randomCharImage = document.getElementById('randomCharImage');
+    const randomCharName = document.getElementById('randomCharName');
+    const randomCharAnime = document.getElementById('randomCharAnime');
+    
+    function getRandomGirl() {
+        return animeGirls[Math.floor(Math.random() * animeGirls.length)];
+    }
+    
+    function showRandomGirl() {
+        const girl = getRandomGirl();
+        randomCharImage.src = girl.image;
+        randomCharImage.onerror = () => {
+            randomCharImage.src = `https://placehold.co/500x600/1a1a2e/667eea?text=${encodeURIComponent(girl.name)}`;
+        };
+        randomCharName.textContent = girl.name;
+        randomCharAnime.innerHTML = `📺 ${girl.anime}<br><span style="font-size: 12px; color: #aaa;">${girl.description}</span>`;
+        randomCharContainer.style.display = "block";
+        randomCharContainer.classList.remove('card-animate');
+        setTimeout(() => randomCharContainer.classList.add('card-animate'), 10);
+    }
+    
+    if (randomCharBtn) randomCharBtn.addEventListener('click', showRandomGirl);
+
+    // === ПЕРЕКЛЮЧЕНИЕ ТАБОВ ===
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tabId = btn.dataset.tab;
+            
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+            
+            btn.classList.add('active');
+            document.getElementById(`${tabId}-tab`).classList.add('active');
+            
+            if (tabId === 'gallery') {
+                renderGallery();
+            }
+        });
+    });
+    
+    // Запуск
+    if (document.querySelector('.tab-btn.active')?.dataset.tab === 'gallery') {
+        renderGallery();
+    }
+    
+    console.log('🎉 Сайт загружен!');
+    // Падающие частицы
+function createParticle() {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.innerHTML = ['🌸', '💕', '💗', '💖', '🎀', '✨', '💜'][Math.floor(Math.random() * 7)];
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.fontSize = (Math.random() * 20 + 10) + 'px';
+    particle.style.animationDuration = (Math.random() * 5 + 5) + 's';
+    particle.style.animationDelay = Math.random() * 5 + 's';
+    document.getElementById('particles').appendChild(particle);
+    
+    setTimeout(() => particle.remove(), 10000);
+}
+
+setInterval(createParticle, 500);
+</script>
+<div id="particles"></div>
+</body>
+</html>

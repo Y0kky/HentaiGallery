@@ -1,0 +1,8 @@
+.image-row {
+    display: flex;
+    justify-content: center;  /* Центрирует картинки по горизонтали */
+    gap: 5px;  /* Расстояние между картинками */
+    margin: 15px 0;
+    width: 300px;  /* Фиксированная ширина */
+    height: auto;
+}

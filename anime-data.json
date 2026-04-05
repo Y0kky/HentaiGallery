@@ -1,0 +1,41 @@
+{
+  "videos": [
+    {
+      "id": 1,
+      "video": "ostt.mp4",
+      "title": "🎬 Классный момент 1 🎬",
+      "description": "Очень эпичный момент из аниме. Обязательно посмотри!",
+      "category": "action",
+      "tags": ["эпичный", "битва"],
+      "date_added": "2024-01-15"
+    },
+    {
+      "id": 2,
+      "video": "ostt1.mp4",
+      "title": "🌸 Красивый момент 🌸",
+      "description": "Очень красивая сцена с сакурой и музыкой.",
+      "category": "romance",
+      "tags": ["красивый", "сакура"],
+      "date_added": "2024-01-16"
+    }
+  ],
+  "animeGirls": [
+    {
+      "id": 1,
+      "name": "Аска Лэнгли Сорью",
+      "anime": "Евангелион",
+      "image": "https://via.placeholder.com/300x400?text=Asuka",
+      "tags": ["tsundere", "пилот"],
+      "popularity": 95
+    },
+    {
+      "id": 2,
+      "name": "Рей Аянами",
+      "anime": "Евангелион",
+      "image": "https://via.placeholder.com/300x400?text=Rei",
+      "tags": ["молчаливая", "загадочная"],
+      "popularity": 94
+    }
+  ],
+  "total": 2500
+}
